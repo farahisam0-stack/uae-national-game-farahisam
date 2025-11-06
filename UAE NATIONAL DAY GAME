@@ -1,0 +1,52 @@
+from flask import Flask, request
+
+#name is a varible from python
+app = Flask(__name__)
+
+# when someone visits the home page, allow them to view and submit answers.
+@app.route('/', methods=['GET', 'POST'])
+
+#main function for building webpage
+def home():
+    message = ""
+
+    # if user clicked submit, grab what they typed.
+    if request.method == 'POST':
+        answer = request.form['answer']
+
+        #whatever answer is added, it will go lower caps w no space to match the answer.
+        if answer.lower().strip() == "december 2":
+            message = "Correct! Happy National Day."
+        else:
+            message = " Nope! Try again."
+
+# HTML webpage code
+    # return is used to set up the users screen
+    return f'''
+        <body style="background-color: lightblue; text-align: center;">
+            <h1 style="font-size: 45px; color: red;font-family: Arial;">Hello Al Nahda Student!</h1>
+            <h2 style="font-size: 60px; color: darkgreen;font-family: Arial;">All About the National Day in the UAE</h2>
+            <p style="font-size: 25px; color: black;font-family: Georgia;">On December 2nd, we celebrate 54 years of unity, pride, and progress in the United Arab Emirates.
+                The UAE was founded in 1971 when seven emirates joined together as one nation. National Day is marked by parades, fireworks, and joyful celebrations across the country.</p>
+          
+        
+
+            <h2 style="font-size: 43px;font-family: Arial;color: white;">UAE Mini Game </h2>
+            <p style="font-size: 25px;font-family: Georgia;">When is the National Day for United Arab Emirates?</p>
+            <form method="POST">
+                <input name="answer" style="font-size: 20px;font-family: Arial;" placeholder="Click to type your answer">
+                <button type="submit">Submit answer</button>
+                
+            </form>
+            <p style="font-size: 25px;font-family: Arial;">{message}</p>
+              <div style="display: flex; align-items: center; justify-content: center;">
+                <img src="/static/img_2.png" alt="UAE Flag" style="width: 600px; border-radius: 15px;">
+                 <img src="/static/img_3.png" alt="UAE Flag" style="width: 600px; border-radius: 15px;">
+            </div>
+
+        </body>
+    '''
+# this is responsible for running the website, if you run this file "name", start.
+if __name__ == '__main__':
+    #starts server so you can visit your website
+    app.run(debug=True)
